@@ -13,4 +13,3 @@ class Experience(Component):
 
     def add_pdf_content(self, pdf: FPDF):
         pass
-

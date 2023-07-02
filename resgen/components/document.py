@@ -24,9 +24,7 @@ class PageSettings(BaseModel):
 
     def create_new(self) -> FPDF:
         return FPDF(
-            orientation=self.orientation.value,
-            format=self.papersize.value,
-            unit="mm"
+            orientation=self.orientation.value, format=self.papersize.value, unit="mm"
         )
 
 
@@ -43,25 +41,24 @@ class Document(BaseModel, ABC):
 
 
 class Resume(Document):
-
     def build(self) -> None:
         pdf = self.page_settings.create_new()
         pdf.add_page()
         pdf.set_font("Helvetica", "", 16)
         pdf.set_margins(0, 0)
         for i in range(10):
-            pdf.set_font("Helvetica", "", (i+1)*16)
-            pdf.set_margins(left= i*2, top=0, right=0)
-            pdf.multi_cell(w= 0, txt="Hello world ", border= 1, new_x= XPos.LEFT)
+            pdf.set_font("Helvetica", "", (i + 1) * 16)
+            pdf.set_margins(left=i * 2, top=0, right=0)
+            pdf.multi_cell(w=0, txt="Hello world ", border=1, new_x=XPos.LEFT)
             print(f"{pdf.page=} {pdf.get_x()=} {pdf.get_y()=}")
         pdf.page = 1
         pdf.set_y(0)
         pdf.set_font("Helvetica", "", 16)
         pdf.set_margins(0, 0)
         for i in range(10):
-            pdf.set_font("Helvetica", "", (i+1)*16)
-            pdf.set_margins(left= i*2, top=0, right=0)
-            pdf.multi_cell(w= 0, txt="Hallo wereld ", border= 1, new_x= XPos.LEFT)
+            pdf.set_font("Helvetica", "", (i + 1) * 16)
+            pdf.set_margins(left=i * 2, top=0, right=0)
+            pdf.multi_cell(w=0, txt="Hallo wereld ", border=1, new_x=XPos.LEFT)
             print(f"{pdf.page=} {pdf.get_x()=} {pdf.get_y()=}")
 
         pdf.output(self.output_name)
@@ -69,7 +66,7 @@ class Resume(Document):
 
 if __name__ == "__main__":
     doc = Resume(
-        page_settings = PageSettings(
+        page_settings=PageSettings(
             orientation=Orientation.PORTRAIT,
             papersize=PaperSize.A4,
         ),
