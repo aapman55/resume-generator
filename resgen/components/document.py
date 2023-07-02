@@ -1,77 +1,27 @@
-from abc import ABC, abstractmethod
-from enum import Enum
+from abc import ABC
 
 from fpdf import FPDF
-from fpdf.enums import XPos
-from pydantic import BaseModel, Field
 
 
-class PaperSize(Enum):
-    A4 = "a4"
+class Document(FPDF, ABC):
 
+    def header(self):
+        pass
 
-class Orientation(Enum):
-    LANDSCAPE: str = "LANDSCAPE"
-    PORTRAIT: str = "PORTRAIT"
-
-
-class PageSettings(BaseModel):
-    papersize: PaperSize = Field(default=PaperSize.A4)
-    orientation: Orientation = Field(default=Orientation.PORTRAIT)
-
-    class Config:
-        arbitrary_types_allowed = True
-
-
-class Document(BaseModel, ABC):
-    page_settings: PageSettings = Field(..., description="Page settings")
-    output_name: str = Field(..., description="The filename of the exported PDF.")
-
-    class Config:
-        arbitrary_types_allowed = True
-
-    def _create_new_pdf(self) -> FPDF:
-        return FPDF(
-            orientation=self.page_settings.orientation.value,
-            format=self.page_settings.papersize.value,
-            unit="mm",
-        )
-
-    @abstractmethod
-    def build(self):
-        raise NotImplementedError()
+    def footer(self):
+        pass
 
 
 class Resume(Document):
-    def build(self) -> None:
-        pdf = self._create_new_pdf()
-        pdf.add_page()
-        pdf.set_font("Helvetica", "", 16)
-        pdf.set_margins(0, 0)
-        for i in range(10):
-            pdf.set_font("Helvetica", "", (i + 1) * 16)
-            pdf.set_margins(left=i * 2, top=0, right=0)
-            pdf.multi_cell(w=0, txt="Hello world ", border=1, new_x=XPos.LEFT)
-            print(f"{pdf.page=} {pdf.get_x()=} {pdf.get_y()=}")
-        pdf.page = 1
-        pdf.set_y(0)
-        pdf.set_font("Helvetica", "", 16)
-        pdf.set_margins(0, 0)
-        for i in range(10):
-            pdf.set_font("Helvetica", "", (i + 1) * 16)
-            pdf.set_margins(left=i * 2, top=0, right=0)
-            pdf.multi_cell(w=0, txt="Hallo wereld ", border=1, new_x=XPos.LEFT)
-            print(f"{pdf.page=} {pdf.get_x()=} {pdf.get_y()=}")
 
-        pdf.output(self.output_name)
+    def header(self):
+        # Setting font: helvetica bold 15
+        self.set_font("helvetica", "B", 15)
+        # Moving cursor to the right:
+        self.cell(80)
+        # Printing title:
+        self.cell(30, 10, "Title", border=1, align="C")
+        # Performing a line break:
+        self.ln(20)
 
 
-if __name__ == "__main__":
-    doc = Resume(
-        page_settings=PageSettings(
-            orientation=Orientation.PORTRAIT,
-            papersize=PaperSize.A4,
-        ),
-        output_name="hello_world.pdf",
-    )
-    doc.build()

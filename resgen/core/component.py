@@ -1,8 +1,16 @@
+from abc import ABC, abstractmethod
 from copy import deepcopy
 from importlib import import_module
 from typing import Dict, Any
 
-from resgen.components.component import Component
+from fpdf import FPDF
+from pydantic import BaseModel
+
+
+class Component(BaseModel, ABC):
+    @abstractmethod
+    def add_pdf_content(self, pdf: FPDF):
+        ...
 
 
 def init_class(full_class_path: str) -> Any:

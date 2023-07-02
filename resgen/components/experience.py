@@ -1,7 +1,7 @@
 from fpdf import FPDF
 from pydantic import Field
 
-from resgen.components.component import Component
+from resgen.core.component import Component
 
 
 class Experience(Component):
