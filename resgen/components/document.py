@@ -22,11 +22,6 @@ class PageSettings(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def create_new(self) -> FPDF:
-        return FPDF(
-            orientation=self.orientation.value, format=self.papersize.value, unit="mm"
-        )
-
 
 class Document(BaseModel, ABC):
     page_settings: PageSettings = Field(..., description="Page settings")
@@ -35,6 +30,13 @@ class Document(BaseModel, ABC):
     class Config:
         arbitrary_types_allowed = True
 
+    def _create_new_pdf(self) -> FPDF:
+        return FPDF(
+            orientation=self.page_settings.orientation.value,
+            format=self.page_settings.papersize.value,
+            unit="mm",
+        )
+
     @abstractmethod
     def build(self):
         raise NotImplementedError()
@@ -42,7 +44,7 @@ class Document(BaseModel, ABC):
 
 class Resume(Document):
     def build(self) -> None:
-        pdf = self.page_settings.create_new()
+        pdf = self._create_new_pdf()
         pdf.add_page()
         pdf.set_font("Helvetica", "", 16)
         pdf.set_margins(0, 0)
