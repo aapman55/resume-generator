@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from enum import Enum
 
 from fpdf import FPDF
@@ -10,22 +11,41 @@ class PaperSize(Enum):
 
 
 class Orientation(Enum):
-    LANDSCAPE = "LANDSCAPE"
-    PORTRAIT = "PORTRAIT"
+    LANDSCAPE: str = "LANDSCAPE"
+    PORTRAIT: str = "PORTRAIT"
 
 
-class Resume(BaseModel):
-    output_name: str = Field(..., description="The filename of the exported PDF.")
+class PageSettings(BaseModel):
     papersize: PaperSize = Field(default=PaperSize.A4)
     orientation: Orientation = Field(default=Orientation.PORTRAIT)
 
     class Config:
         arbitrary_types_allowed = True
 
-    def build(self) -> None:
-        pdf = FPDF(
-            orientation=self.orientation.value, format=self.papersize.value, unit="mm"
+    def create_new(self) -> FPDF:
+        return FPDF(
+            orientation=self.orientation.value,
+            format=self.papersize.value,
+            unit="mm"
         )
+
+
+class Document(BaseModel, ABC):
+    page_settings: PageSettings = Field(..., description="Page settings")
+    output_name: str = Field(..., description="The filename of the exported PDF.")
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    @abstractmethod
+    def build(self):
+        raise NotImplementedError()
+
+
+class Resume(Document):
+
+    def build(self) -> None:
+        pdf = self.page_settings.create_new()
         pdf.add_page()
         pdf.set_font("Helvetica", "", 16)
         pdf.set_margins(0, 0)
@@ -49,8 +69,10 @@ class Resume(BaseModel):
 
 if __name__ == "__main__":
     doc = Resume(
+        page_settings = PageSettings(
+            orientation=Orientation.PORTRAIT,
+            papersize=PaperSize.A4,
+        ),
         output_name="hello_world.pdf",
-        orientation=Orientation.PORTRAIT,
-        papersize=PaperSize.A4,
     )
     doc.build()

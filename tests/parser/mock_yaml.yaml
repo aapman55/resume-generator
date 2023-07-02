@@ -1,0 +1,9 @@
+name: test_yaml
+page_settings:
+  orientation: LANDSCAPE
+  paper_size: a4
+side_bar: null
+content:
+  components:
+    - component: resgen.components.document.Resume
+      content: Hello world
