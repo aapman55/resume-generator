@@ -4,7 +4,7 @@ version = "0.0.1"
 description = "Generate resume based on configuration"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-packages = [{include = "resume_generator"}]
+packages = [{include = "resgen"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"

@@ -10,8 +10,8 @@ class PaperSize(Enum):
 
 
 class Orientation(Enum):
-    LANDSCAPE = "L"
-    PORTRAIT = "P"
+    LANDSCAPE = "LANDSCAPE"
+    PORTRAIT = "PORTRAIT"
 
 
 class Resume(BaseModel):
