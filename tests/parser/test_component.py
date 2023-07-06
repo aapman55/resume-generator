@@ -1,6 +1,6 @@
 import unittest
 
-from resgen.components.document import Resume
+from resgen.core.document import Resume
 from resgen.core.component import init_class, init_component
 from resgen.components.experience import Experience
 
