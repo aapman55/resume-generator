@@ -1,9 +1,11 @@
 from enum import Enum
+from typing import List, Dict
 
 from fpdf import XPos
 from pydantic import BaseModel, Field
 
-from resgen.core.component import init_class
+from resgen.core.component import init_class, Component, init_component
+from resgen.core.document import Document
 
 
 class PaperSize(Enum):
@@ -24,11 +26,12 @@ class PageSettings(BaseModel):
 
 
 class DocumentBuilder(BaseModel):
-    document_class_name: str = Field(default="resgen.components.document.Resume")
-    page_settings: PageSettings = Field(..., description="Page settings")
+    document_class_name: str = Field(default="resgen.core.document.Resume")
+    page_settings: PageSettings = Field(PageSettings(), description="Page settings")
     output_name: str = Field(..., description="The filename of the exported PDF.")
+    components: List[Dict] = Field(..., description="List of components of type Component")
 
-    def build(self) -> None:
+    def build(self) -> Document:
         document_class = init_class(self.document_class_name)
         document = document_class(
             orientation=self.page_settings.orientation.value,
@@ -37,33 +40,13 @@ class DocumentBuilder(BaseModel):
         )
 
         document.set_font("Helvetica", "", 16)
-        document.set_margins(0, 0)
+        document.set_margins(20, 0)
         document.add_page()
-        for i in range(10):
-            document.set_font("Helvetica", "", (i + 1) * 16)
-            document.set_margins(left=i * 2, top=0, right=0)
-            document.multi_cell(w=0, txt="Hello world ", border=1, new_x=XPos.LEFT)
-            print(f"{document.page=} {document.get_x()=} {document.get_y()=}")
-        # document.page = 1
-        # document.set_y(0)
-        document.set_font("Helvetica", "", 16)
-        document.set_margins(0, 0)
-        for i in range(10):
-            document.set_font("Helvetica", "", (i + 1) * 16)
-            document.set_margins(left=i * 2, top=0, right=0)
-            document.multi_cell(w=0, txt="Hallo wereld ", border=1, new_x=XPos.LEFT)
-            print(f"{document.page=} {document.get_x()=} {document.get_y()=}")
+
+        for component in self.components:
+            init_component(component).build(document)
 
         document.output(self.output_name)
 
+        return document
 
-if __name__ == "__main__":
-    pdf = DocumentBuilder(
-        page_settings={
-            "orientation": "LANDSCAPE",
-            "papersize": "A4",
-        },
-        output_name="hello_world.pdf",
-    )
-
-    pdf.build()

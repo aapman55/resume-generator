@@ -4,10 +4,19 @@ from importlib import import_module
 from typing import Dict, Any
 
 from fpdf import FPDF
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from resgen.core.document import Document
 
 
 class Component(BaseModel, ABC):
+    bottom_padding: int = Field(20, description="How much space after the component in mm")
+
+    def build(self, pdf: Document):
+        self.add_pdf_content(pdf)
+        # margin to next component
+        pdf.ln(self.bottom_padding)
+
     @abstractmethod
     def add_pdf_content(self, pdf: FPDF):
         ...
