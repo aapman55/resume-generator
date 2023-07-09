@@ -20,7 +20,7 @@ class Component(BaseModel, ABC):
         original_rmargin = pdf.r_margin
 
         pdf.set_left_margin(original_lmargin + self.left_padding)
-        pdf.set_right_margin(original_rmargin - self.right_padding)
+        pdf.set_right_margin(original_rmargin + self.right_padding)
 
         # top padding
         pdf.ln(self.top_padding)
