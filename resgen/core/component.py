@@ -10,12 +10,29 @@ from resgen.core.document import Document
 
 
 class Component(BaseModel, ABC):
-    bottom_padding: int = Field(20, description="How much space after the component in mm")
+    top_padding: int = Field(5, description="How much space before the component in mm")
+    bottom_padding: int = Field(5, description="How much space after the component in mm")
+    left_padding: int = Field(5, description="How much space after the component in mm")
+    right_padding: int = Field(5, description="How much space after the component in mm")
 
     def build(self, pdf: Document):
+        original_lmargin = pdf.l_margin
+        original_rmargin = pdf.r_margin
+
+        pdf.set_left_margin(original_lmargin + self.left_padding)
+        pdf.set_right_margin(original_rmargin - self.right_padding)
+
+        # top padding
+        pdf.ln(self.top_padding)
+
+        # contents
         self.add_pdf_content(pdf)
-        # margin to next component
+
+        # bottom padding
         pdf.ln(self.bottom_padding)
+
+        pdf.set_left_margin(original_lmargin)
+        pdf.set_right_margin(original_rmargin)
 
     @abstractmethod
     def add_pdf_content(self, pdf: FPDF):

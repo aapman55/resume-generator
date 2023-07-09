@@ -11,13 +11,16 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHING",
+                "top_padding": 30,
+                "left_padding": 100
             },
             {
                 "component": "resgen.components.experience.Experience",
                 "title": "TITLE",
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
-                "description": "NOTHING",
+                "description": "NOTHINGllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+                "right_padding": 100,
             },
         ]
 

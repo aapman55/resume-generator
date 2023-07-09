@@ -160,4 +160,4 @@ cython_debug/
 .idea/
 
 # Ignore example pdfs in example folder
-examples/*.pdf
+examples/**/*.pdf
