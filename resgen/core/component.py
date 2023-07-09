@@ -9,20 +9,32 @@ from pydantic import BaseModel, Field
 from resgen.core.document import Document
 
 
+class FillColour(BaseModel):
+    r: int = Field(..., description="RED", ge=0, le=255)
+    g: int = Field(..., description="GREEN", ge=0, le=255)
+    b: int = Field(..., description="BLUE", ge=0, le=255)
+
+
 class Component(BaseModel, ABC):
     top_padding: int = Field(5, description="How much space before the component in mm")
     bottom_padding: int = Field(5, description="How much space after the component in mm")
     left_padding: int = Field(5, description="How much space after the component in mm")
     right_padding: int = Field(5, description="How much space after the component in mm")
+    fill_colour: FillColour = Field(None, description="Background colour in RGB")
 
     def build(self, pdf: Document):
+        # Save previous settings
         original_lmargin = pdf.l_margin
         original_rmargin = pdf.r_margin
+        original_fill_colour = pdf.fill_color
 
+        # set fill colour
+        if self.fill_colour:
+            pdf.set_fill_color(self.fill_colour.r, self.fill_colour.g, self.fill_colour.b)
+
+        # Set padding
         pdf.set_left_margin(original_lmargin + self.left_padding)
         pdf.set_right_margin(original_rmargin + self.right_padding)
-
-        # top padding
         pdf.ln(self.top_padding)
 
         # contents
@@ -31,8 +43,10 @@ class Component(BaseModel, ABC):
         # bottom padding
         pdf.ln(self.bottom_padding)
 
+        # restore previous settings
         pdf.set_left_margin(original_lmargin)
         pdf.set_right_margin(original_rmargin)
+        pdf.set_fill_color(original_fill_colour)
 
     @abstractmethod
     def add_pdf_content(self, pdf: FPDF):

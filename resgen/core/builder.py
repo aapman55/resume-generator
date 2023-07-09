@@ -40,7 +40,7 @@ class DocumentBuilder(BaseModel):
         )
 
         document.set_font("Helvetica", "", 16)
-        document.set_margins(20, 0)
+        # document.set_margins(20, 0)
         document.add_page()
 
         for component in self.components:

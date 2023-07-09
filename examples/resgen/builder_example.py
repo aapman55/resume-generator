@@ -12,7 +12,12 @@ def main() -> None:
                 "experience_end": "2023 June",
                 "description": "NOTHING",
                 "top_padding": 30,
-                "left_padding": 100
+                "left_padding": 100,
+                "fill_colour": {
+                    "r": 200,
+                    "g": 200,
+                    "b": 200,
+                }
             },
             {
                 "component": "resgen.components.experience.Experience",
