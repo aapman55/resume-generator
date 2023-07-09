@@ -7,7 +7,7 @@ def main() -> None:
     font_roboto_regular = Font(
         family="Roboto",
         style=FontStyle(""),
-        font_file_path = "./custom_fonts/Roboto-Regular.ttf"
+        font_file_path="./custom_fonts/Roboto-Regular.ttf",
     )
 
     doc.register_font(font_roboto_regular)

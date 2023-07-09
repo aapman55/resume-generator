@@ -6,20 +6,19 @@ from typing import Dict, Any
 from fpdf import FPDF
 from pydantic import BaseModel, Field
 
+from resgen.core.colours import FillColour
 from resgen.core.document import Document
-
-
-class FillColour(BaseModel):
-    r: int = Field(..., description="RED", ge=0, le=255)
-    g: int = Field(..., description="GREEN", ge=0, le=255)
-    b: int = Field(..., description="BLUE", ge=0, le=255)
 
 
 class Component(BaseModel, ABC):
     top_padding: int = Field(5, description="How much space before the component in mm")
-    bottom_padding: int = Field(5, description="How much space after the component in mm")
+    bottom_padding: int = Field(
+        5, description="How much space after the component in mm"
+    )
     left_padding: int = Field(5, description="How much space after the component in mm")
-    right_padding: int = Field(5, description="How much space after the component in mm")
+    right_padding: int = Field(
+        5, description="How much space after the component in mm"
+    )
     fill_colour: FillColour = Field(None, description="Background colour in RGB")
 
     def build(self, pdf: Document):
@@ -30,7 +29,9 @@ class Component(BaseModel, ABC):
 
         # set fill colour
         if self.fill_colour:
-            pdf.set_fill_color(self.fill_colour.r, self.fill_colour.g, self.fill_colour.b)
+            pdf.set_fill_color(
+                self.fill_colour.r, self.fill_colour.g, self.fill_colour.b
+            )
 
         # Set padding
         pdf.set_left_margin(original_lmargin + self.left_padding)
