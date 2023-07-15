@@ -10,5 +10,5 @@ class FontStyle(Enum):
 
 class Font(BaseModel):
     family: str = Field(..., description="Name of the font, can be chosen freely.")
-    style: FontStyle = Field(FontStyle.REGULAR, description="Regular, Bold or Italic")
+    font_style: FontStyle = Field(FontStyle.REGULAR, description="Regular, Bold or Italic")
     font_file_path: str = Field(..., description="Path to the font file")

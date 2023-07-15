@@ -32,7 +32,7 @@ class Document(FPDF, ABC):
     def register_font(self, font: Font) -> None:
         self.add_font(
             family=font.family,
-            style=font.style.value,
+            style=font.font_style.value,
             fname=font.font_file_path,
         )
 
