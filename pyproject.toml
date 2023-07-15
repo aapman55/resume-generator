@@ -4,12 +4,13 @@ version = "0.0.1"
 description = "Generate resume based on configuration"
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-packages = [{include = "resume_generator"}]
+packages = [{include = "resgen"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 fpdf2 = "^2.7.4"
 pydantic = "^1.10.9"
+pyyaml = "^6.0"
 
 
 [tool.poetry.group.dev.dependencies]
