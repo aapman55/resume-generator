@@ -1,3 +1,4 @@
+import pdb
 from abc import ABC
 
 from fpdf import FPDF
@@ -51,11 +52,8 @@ class Document(FPDF, ABC):
             top_left_x = self.w - self.sidebar.width
 
         original_fill_colour = self.fill_color
-        self.set_fill_color(
-            r=self.sidebar.fill_colour.r,
-            g=self.sidebar.fill_colour.g,
-            b=self.sidebar.fill_colour.b,
-        )
+
+        self.set_fill_color(self.sidebar.fill_colour.to_device_rgb())
 
         self.rect(
             x=top_left_x,

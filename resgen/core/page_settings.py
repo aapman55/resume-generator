@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Optional
 from pydantic import BaseModel, Field
 
-from resgen.core.colours import FillColour
+from resgen.core.colours import Colour
 
 
 class PaperSize(Enum):
@@ -16,8 +16,8 @@ class Orientation(Enum):
 
 class SideBar(BaseModel):
     width: int = Field(40, description="Width of the sidebar in mm")
-    fill_colour: FillColour = Field(
-        FillColour.white(), description="Background color of the sidebar"
+    fill_colour: Colour = Field(
+        Colour.white(), description="Background color of the sidebar"
     )
     align_left: bool = Field(
         default=True, description="If Ture aligns left, otherwise right."
