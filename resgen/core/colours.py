@@ -12,10 +12,10 @@ class Colour(BaseModel):
 
     def to_device_rgb(self) -> DeviceRGB:
         return DeviceRGB(
-                r=self.r/255.0,
-                g=self.g/255.0,
-                b=self.b/255.0,
-                a=self.a/255.0 if self.a else self.a,
+            r=self.r / 255.0,
+            g=self.g / 255.0,
+            b=self.b / 255.0,
+            a=self.a / 255.0 if self.a else self.a,
         )
 
     @classmethod

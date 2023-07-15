@@ -12,9 +12,16 @@ class StyleNotFoundError(Exception):
 
 
 class Style(BaseModel):
-    id: str = Field(..., description="Identifier that will be used in components to locate the style")
-    family: str = Field(..., description="Name of the font, needs to correspond to a registered font")
-    font_style: FontStyle = Field(FontStyle.REGULAR, description="Regular, Bold or Italic")
+    id: str = Field(
+        ...,
+        description="Identifier that will be used in components to locate the style",
+    )
+    family: str = Field(
+        ..., description="Name of the font, needs to correspond to a registered font"
+    )
+    font_style: FontStyle = Field(
+        FontStyle.REGULAR, description="Regular, Bold or Italic"
+    )
     font_size: int = Field(12, description="Size of the font")
     font_colour: Colour = Field(Colour.black(), description="Colour of the text")
 

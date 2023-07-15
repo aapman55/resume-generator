@@ -4,17 +4,17 @@ from resgen.core.builder import DocumentBuilder
 def main() -> None:
     builder = DocumentBuilder(
         page_settings={
-          "sidebar": {
-            "fill_colour": {
-                "r": 255,
-                "g": 50,
-                "b": 50,
+            "sidebar": {
+                "fill_colour": {
+                    "r": 255,
+                    "g": 50,
+                    "b": 50,
+                }
             }
-          }
         },
         output_name="builder_example.pdf",
         style_registry={
-            "styles":[
+            "styles": [
                 {
                     "id": "general",
                     "family": "Helvetica",
