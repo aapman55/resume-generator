@@ -6,13 +6,21 @@ def main() -> None:
         page_settings={
           "sidebar": {
             "fill_colour": {
-                "r": 50,
+                "r": 255,
                 "g": 50,
                 "b": 50,
             }
           }
         },
         output_name="builder_example.pdf",
+        style_registry={
+            "styles":[
+                {
+                    "id": "general",
+                    "family": "Helvetica",
+                }
+            ]
+        },
         components=[
             {
                 "component": "resgen.components.experience.Experience",
@@ -20,7 +28,8 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHING",
-                "top_padding": 30,
+                "general_style": "general",
+                "top_padding": 10,
                 # "left_padding": 100,
                 "fill_colour": {
                     "r": 200,
@@ -34,6 +43,7 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHINGllllll lllllllllllllll llllllllllllll lllllllllllllll llllllllllll",
+                "general_style": "general",
                 # "right_padding": 100,
             },
         ],

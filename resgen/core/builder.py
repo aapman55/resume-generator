@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field
 from resgen.core.component import init_class, init_component
 from resgen.core.document import Document
 from resgen.core.page_settings import PageSettings
+from resgen.core.style import StyleRegistry
 
 
 class DocumentBuilder(BaseModel):
@@ -14,6 +15,7 @@ class DocumentBuilder(BaseModel):
     components: List[Dict] = Field(
         ..., description="List of components of type Component"
     )
+    style_registry: StyleRegistry = Field(..., description="Style Registry")
 
     def build(self) -> Document:
         document_class = init_class(self.document_class_name)
@@ -24,21 +26,21 @@ class DocumentBuilder(BaseModel):
             sidebar=self.page_settings.sidebar,
         )
 
-        document.set_font("Helvetica", "", 16)
+        # document.set_font("Helvetica", "", 16)
         document.add_page()
         header_height = document.get_y()
 
         document.switch_to_main_content()
 
         for component in self.components:
-            init_component(component).build(document)
+            init_component(component).build(document, self.style_registry)
 
         if self.page_settings.sidebar:
             document.switch_to_sidebar()
             document.set_y(header_height)
 
             for component in self.components:
-                init_component(component).build(document)
+                init_component(component).build(document, self.style_registry)
 
         document.output(self.output_name)
 

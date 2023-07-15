@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 from resgen.core.colours import Colour
 from resgen.core.document import Document
+from resgen.core.style import StyleRegistry
 
 
 class Component(BaseModel, ABC):
@@ -21,34 +22,34 @@ class Component(BaseModel, ABC):
     )
     fill_colour: Colour = Field(None, description="Background colour in RGB")
 
-    def build(self, pdf: Document):
+    def build(self, doc: Document, style_registry: StyleRegistry):
         # Save previous settings
-        original_lmargin = pdf.l_margin
-        original_rmargin = pdf.r_margin
-        original_fill_colour = pdf.fill_color
+        original_lmargin = doc.l_margin
+        original_rmargin = doc.r_margin
+        original_fill_colour = doc.fill_color
 
         # set fill colour
         if self.fill_colour:
-            pdf.set_fill_color(self.fill_colour.to_device_rgb())
+            doc.set_fill_color(self.fill_colour.to_device_rgb())
 
         # Set padding
-        pdf.set_left_margin(original_lmargin + self.left_padding)
-        pdf.set_right_margin(original_rmargin + self.right_padding)
-        pdf.ln(self.top_padding)
+        doc.set_left_margin(original_lmargin + self.left_padding)
+        doc.set_right_margin(original_rmargin + self.right_padding)
+        doc.ln(self.top_padding)
 
         # contents
-        self.add_pdf_content(pdf)
+        self.add_pdf_content(doc, style_registry)
 
         # bottom padding
-        pdf.ln(self.bottom_padding)
+        doc.ln(self.bottom_padding)
 
         # restore previous settings
-        pdf.set_left_margin(original_lmargin)
-        pdf.set_right_margin(original_rmargin)
-        pdf.set_fill_color(original_fill_colour)
+        doc.set_left_margin(original_lmargin)
+        doc.set_right_margin(original_rmargin)
+        doc.set_fill_color(original_fill_colour)
 
     @abstractmethod
-    def add_pdf_content(self, pdf: FPDF):
+    def add_pdf_content(self, doc: FPDF, style_registry: StyleRegistry):
         ...
 
 
