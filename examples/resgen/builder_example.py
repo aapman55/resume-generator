@@ -18,9 +18,19 @@ def main() -> None:
                 {
                     "id": "general",
                     "family": "Helvetica",
-                }
+                },
+                {
+                    "id": "tektur",
+                    "family": "Tektur",
+                },
             ]
         },
+        custom_fonts=[
+            {
+                "family": "Tektur",
+                "font_file_path": "./custom_fonts/Tektur-Regular.ttf",
+            },
+        ],
         components=[
             {
                 "component": "resgen.components.experience.Experience",
@@ -43,7 +53,7 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHINGllllll lllllllllllllll llllllllllllll lllllllllllllll llllllllllll",
-                "general_style": "general",
+                "general_style": "tektur",
                 # "right_padding": 100,
             },
         ],
