@@ -17,7 +17,9 @@ class DocumentBuilder(BaseModel):
         ..., description="List of components of type Component"
     )
     style_registry: StyleRegistry = Field(..., description="Style Registry")
-    custom_fonts: List[Font] = Field(default_factory=list, description="Custom fonts you want to register")
+    custom_fonts: List[Font] = Field(
+        default_factory=list, description="Custom fonts you want to register"
+    )
 
     def register_fonts(self, doc: Document) -> None:
         for font in self.custom_fonts:
