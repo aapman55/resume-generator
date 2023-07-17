@@ -6,6 +6,9 @@ authors = ["Your Name <you@example.com>"]
 readme = "README.md"
 packages = [{include = "resgen"}]
 
+[tool.poetry.scripts]
+resgen = 'resgen.console.cli:run'
+
 [tool.poetry.dependencies]
 python = "^3.10"
 fpdf2 = "^2.7.4"
