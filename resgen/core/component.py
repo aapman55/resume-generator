@@ -59,16 +59,6 @@ def init_class(full_class_path: str) -> Any:
     module = ".".join(full_class_path.split(".")[:-1])
     clazz = full_class_path.split(".")[-1]
 
-    try:
-        import_module(module)
-    except ModuleNotFoundError:
-        spec = importlib.util.spec_from_file_location(
-            module, f'{module.replace(".","/")}.py'
-        )
-        mdl = importlib.util.module_from_spec(spec)
-        sys.modules[module] = mdl
-        spec.loader.exec_module(mdl)
-
     return getattr(import_module(module), clazz)
 
 
