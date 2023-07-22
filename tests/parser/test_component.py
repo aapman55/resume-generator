@@ -20,12 +20,14 @@ class TestComponent(unittest.TestCase):
             "title": "First job",
             "experience_start": "June 2021",
             "description": "I did absolutely nothing",
+            "general_style": "standard_style",
         }
         actual_component = init_component(input_dict)
         expected_component = Experience(
             title="First job",
             experience_start="June 2021",
             description="I did absolutely nothing",
+            general_style="standard_style",
         )
 
         self.assertEqual(actual_component, expected_component)

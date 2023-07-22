@@ -1,9 +1,9 @@
+import importlib
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from importlib import import_module
 from typing import Dict, Any
 
-from fpdf import FPDF
 from pydantic import BaseModel, Field
 
 from resgen.core.colours import Colour
@@ -49,13 +49,25 @@ class Component(BaseModel, ABC):
         doc.set_fill_color(original_fill_colour)
 
     @abstractmethod
-    def add_pdf_content(self, doc: FPDF, style_registry: StyleRegistry):
+    def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
         ...
 
 
 def init_class(full_class_path: str) -> Any:
+    import sys
+
     module = ".".join(full_class_path.split(".")[:-1])
     clazz = full_class_path.split(".")[-1]
+
+    try:
+        import_module(module)
+    except ModuleNotFoundError:
+        spec = importlib.util.spec_from_file_location(
+            module, f'{module.replace(".","/")}.py'
+        )
+        mdl = importlib.util.module_from_spec(spec)
+        sys.modules[module] = mdl
+        spec.loader.exec_module(mdl)
 
     return getattr(import_module(module), clazz)
 
