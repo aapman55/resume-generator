@@ -15,7 +15,9 @@ class ProfileDescription(Component):
             "that strectches out more."
         ),
     )
-    text_style: str = Field(..., description="ID of registered style in the style registry.")
+    text_style: str = Field(
+        ..., description="ID of registered style in the style registry."
+    )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
         original_c_margin = doc.c_margin
