@@ -12,10 +12,10 @@ class Experience(Component):
     experience_end: str = Field("Present", description="End date")
     description: str = Field(..., description="What did you do")
 
-    general_style: str = Field(..., description="Reference to the registered style_id")
+    text_style: str = Field(..., description="Reference to the registered style_id")
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
-        style_registry.get(self.general_style).activate(doc)
+        style_registry.get(self.text_style).activate(doc)
         doc.multi_cell(
             w=0,
             txt=self.title,
