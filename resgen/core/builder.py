@@ -46,6 +46,7 @@ class DocumentBuilder(BaseModel):
             init_component(component).build(document, self.style_registry)
 
         if self.page_settings.sidebar:
+            document.page = list(document.pages)[0]
             document.switch_to_sidebar()
             document.set_y(header_height)
 
