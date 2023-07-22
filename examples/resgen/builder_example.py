@@ -38,7 +38,7 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHING",
-                "general_style": "general",
+                "text_style": "general",
                 "top_padding": 10,
                 # "left_padding": 100,
                 "fill_colour": {
@@ -53,7 +53,7 @@ def main() -> None:
                 "experience_start": "2020 Jan",
                 "experience_end": "2023 June",
                 "description": "NOTHINGllllll lllllllllllllll llllllllllllll lllllllllllllll llllllllllll",
-                "general_style": "tektur",
+                "text_style": "tektur",
                 # "right_padding": 100,
             },
         ],
