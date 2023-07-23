@@ -6,6 +6,31 @@ from resgen.core.document import Document
 from resgen.core.style import StyleRegistry
 
 
+class ProfileHeadline(Component):
+    name: str = Field(..., description="Name of the person the resume is for")
+    name_style: str = Field(
+        ..., description="ID of registered style in the style registry."
+    )
+    job_title: str = Field(..., description="Job title")
+    job_title_style: str = Field(
+        ..., description="ID of registered style in the style registry."
+    )
+
+    def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
+        style_registry.get(self.name_style).activate(doc)
+        doc.multi_cell(
+            w=0,
+            txt=self.name,
+            new_x=XPos.LEFT,
+        )
+        style_registry.get(self.job_title_style).activate(doc)
+        doc.multi_cell(
+            w=0,
+            txt=self.job_title,
+            new_x=XPos.LEFT,
+        )
+
+
 class ProfileDescription(Component):
     text: str = Field(..., description="The text of your profile description.")
     cell_padding: int = Field(
