@@ -69,7 +69,7 @@ class TitledKeyValueList(Component):
             # cell size extends to end
             # next cell will start at the left margin
             # next cell will start on a new line
-            doc.cell(
+            doc.multi_cell(
                 w=0,
                 txt=v,
                 new_x=XPos.LMARGIN,
