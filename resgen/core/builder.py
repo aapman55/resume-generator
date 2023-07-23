@@ -16,6 +16,10 @@ class DocumentBuilder(BaseModel):
     components: List[Dict] = Field(
         ..., description="List of components of type Component"
     )
+    sidebar_components: List[Dict] = Field(
+        default_factory=list,
+        description="List of components of type Component for the sidebar",
+    )
     style_registry: StyleRegistry = Field(..., description="Style Registry")
     custom_fonts: List[Font] = Field(
         default_factory=list, description="Custom fonts you want to register"
@@ -50,7 +54,7 @@ class DocumentBuilder(BaseModel):
             document.switch_to_sidebar()
             document.set_y(header_height)
 
-            for component in self.components:
+            for component in self.sidebar_components:
                 init_component(component).build(document, self.style_registry)
 
         document.output(self.output_name)
