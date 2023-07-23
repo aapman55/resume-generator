@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "resume-generator"
+name = "resgen"
 version = "0.0.1"
 description = "Generate resume based on configuration"
 authors = ["Your Name <you@example.com>"]
