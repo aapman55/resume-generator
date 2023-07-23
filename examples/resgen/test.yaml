@@ -1,0 +1,128 @@
+document_class_name: resgen.core.document.Document
+output_name: ./examples/resgen/yaml_example.pdf
+page_settings:
+  orientation: PORTRAIT
+  papersize: A4
+  sidebar:
+    align_left: true
+    fill_colour:
+      r: 204
+      g: 171
+      b: 222
+    width: 60
+custom_fonts:
+- family: Tektur
+  font_file_path: ./examples/resgen/custom_fonts/Tektur-Regular.ttf
+  font_style: ""
+style_registry:
+  styles:
+  - family: Helvetica
+    font_colour:
+      r: 0
+      g: 0
+      b: 0
+    font_size: 12
+    font_style: ""
+    id: general
+  - family: Tektur
+    font_colour:
+      r: 0
+      g: 0
+      b: 0
+    font_size: 9
+    font_style: ""
+    id: tektur
+  - family: Tektur
+    font_colour:
+      r: 0
+      g: 0
+      b: 0
+    font_size: 30
+    font_style: ""
+    id: headline
+components:
+- component: resgen.components.profile.ProfileHeadline
+  name: Knorrie the purple pig
+  name_style: headline
+  job_title: Producer | CEO
+  job_title_style: general
+- component: resgen.components.profile.ProfileDescription
+  text: >
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+    Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, 
+    purus lectus malesuada libero, sit amet commodo magna eros quis urna.
+    
+    
+    Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.
+    
+    
+    Pellentesque habitant morbi tristique senectus et netus et 
+    malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci.
+    
+    
+    Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.
+    
+    
+    Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. 
+    Mauris eget neque at sem venenatis eleifend. Ut nonummy.
+    
+    
+    Fusce aliquet pede non pede. Suspendisse dapibus lorem pellentesque magna. 
+    Integer nulla.
+    
+    
+    Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, 
+    purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat.
+    
+    
+    Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique.
+
+  text_style: tektur
+  cell_padding: 5
+  fill_colour:
+    r: 230
+    g: 230
+    b: 230
+- component: resgen.components.experience.Experience
+  description: NOTHING
+  experience_end: 2023 June
+  experience_start: 2020 Jan
+  fill_colour:
+    r: 200
+    g: 200
+    b: 200
+  text_style: general
+  title: TITLE
+  top_padding: 10
+- component: resgen.components.experience.Experience
+  title: TITLE
+  experience_end: 2023 June
+  experience_start: 2020 Jan
+  description: >
+    NOTHINGllllll 
+    
+    lllllllllllllll 
+    
+    llllllllllllll 
+    
+    lllllllllllllll 
+    
+    llllllllllll
+  text_style: tektur
+sidebar_components:
+- component: resgen.components.list.TitledKeyValueList
+  title: Personalia
+  title_style: general
+  key_values:
+    Name: Knorrie the most gorgeous purple pig
+    Location: Farmhouse
+  key_values_style: tektur
+
+- component: resgen.components.list.TitledList
+  title: Skills
+  title_style: general
+  list_values:
+    - Pig
+    - Pigs
+    - Farm
+  list_values_style: tektur
