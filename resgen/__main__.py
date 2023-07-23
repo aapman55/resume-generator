@@ -6,4 +6,5 @@ sys.path.append(str(Path(".").resolve()))
 
 if __name__ == "__main__":
     from resgen.console.cli import run
+
     run()
