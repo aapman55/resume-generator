@@ -117,7 +117,7 @@ components:
     - title: Piglet
       experience_start: 2010
       experience_end: 2010
-      description: 123456789012345678901234567890123456789012345678901234567890
+      description: Pigging around, doing pig stuff
 
 sidebar_components:
 - component: resgen.components.list.TitledKeyValueList
