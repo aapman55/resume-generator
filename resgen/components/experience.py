@@ -122,7 +122,7 @@ class ExperiencesCompact(Component):
             # Time Period
             style_registry.get(self.begin_end_style).activate(doc)
             doc.cell(
-                w=30,
+                w=self.experience_timespan_width,
                 txt=experience.experience_range,
                 new_x=XPos.RIGHT,
             )
