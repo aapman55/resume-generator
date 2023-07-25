@@ -83,7 +83,7 @@ components:
     r: 230
     g: 230
     b: 230
-- component: resgen.components.experience.ExperienceDetailed
+- component: resgen.components.experience.ExperiencesDetailed
   experiences_title_style: headline
   begin_end_style: general
   title_style: general
@@ -102,6 +102,22 @@ components:
 
 
       In addition to being an expert in rolling in the mud, I am also adept at using it as a tool for socialization. Rolling in the mud is a way for me to bond with other pigs and to establish my position in the herd. The act of rolling in the mud together creates a sense of camaraderie and trust among us, which is crucial for our survival. My ability to roll in the mud not only demonstrates my physical prowess but also my social intelligence. I am a master of the mud, and I use it to my advantage in every way possible.
+- component: resgen.components.experience.ExperiencesCompact
+  experiences_title: Education
+  experiences_title_style: headline
+  begin_end_style: general
+  title_style: general
+  description_style: tektur
+  top_padding: 10
+  experiences:
+    - title: Pig
+      experience_start: 2010
+      experience_end: 2015
+      description: Farmhouse
+    - title: Piglet
+      experience_start: 2010
+      experience_end: 2010
+      description: Pigging around, doing pig stuff
 
 sidebar_components:
 - component: resgen.components.list.TitledKeyValueList
