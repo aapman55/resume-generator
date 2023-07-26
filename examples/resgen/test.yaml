@@ -34,6 +34,14 @@ style_registry:
     id: tektur
   - family: Tektur
     font_colour:
+      r: 255
+      g: 255
+      b: 255
+    font_size: 9
+    font_style: ""
+    id: sidebar-tektur
+  - family: Tektur
+    font_colour:
       r: 0
       g: 0
       b: 0
@@ -121,13 +129,18 @@ components:
       description: Pigging around, doing pig stuff
 
 sidebar_components:
+- component: resgen.components.image.RoundedProfilePicture
+  image_path: ./examples/resgen/img/pig.png
+  left_padding: 2
+  right_padding: 2
+  top_padding: 2
 - component: resgen.components.list.TitledKeyValueList
   title: Personalia
   title_style: general
   key_values:
     Name: Knorrie the most gorgeous purple pig
     Location: Farmhouse
-  key_values_style: tektur
+  key_values_style: sidebar-tektur
 
 - component: resgen.components.list.TitledList
   title: Skills
@@ -136,4 +149,4 @@ sidebar_components:
     - Pig
     - Pigs
     - Farm
-  list_values_style: tektur
+  list_values_style: sidebar-tektur
