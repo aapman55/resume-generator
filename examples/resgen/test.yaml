@@ -135,10 +135,15 @@ sidebar_components:
   right_padding: 2
   top_padding: 2
 - component: resgen.components.rating.CircleRating
-  rating: 5
-  rating_total: 8
+  rating: 9
+  rating_total: 14
   rating_text: Pigness
   rating_text_style: general
+- component: resgen.components.rating.CircleRating
+  rating: 9
+  rating_total: 14
+  rating_text: Piggyness
+  rating_text_style: tektur
 - component: resgen.components.list.TitledKeyValueList
   title: Personalia
   title_style: general

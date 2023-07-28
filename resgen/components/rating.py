@@ -1,3 +1,6 @@
+import math
+
+from fpdf import YPos
 from pydantic import Field
 
 from resgen.core.colours import Colour
@@ -16,6 +19,9 @@ class CircleRating(Component):
     )
     rating_text: str = Field(..., description="What is the rating about")
     rating_text_style: str = Field(..., description="Style of the rating text")
+    rating_text_width: float = Field(
+        25, description="Width of box for description. Default is 25 mm."
+    )
     line_width: int = Field(
         2, description="Line width. X times the default width of 0.2 mm"
     )
@@ -23,9 +29,10 @@ class CircleRating(Component):
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
         style_registry.get(self.rating_text_style).activate(doc)
 
-        doc.cell(
-            w=20,
+        doc.multi_cell(
+            w=self.rating_text_width,
             txt=self.rating_text,
+            new_y=YPos.LAST,
         )
 
         doc.set_line_width(0.2 * self.line_width)
@@ -38,28 +45,53 @@ class CircleRating(Component):
             y=doc.y + (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size,
         )
 
+        r_margin_x = doc.w - doc.r_margin
+        available_drawing_space = r_margin_x - doc.x
+        circles_per_row = math.floor(available_drawing_space / doc.font_size)
+
+        # move x such that most right circle is at the margin
+        left_x_circles = (
+            r_margin_x
+            - circles_per_row * doc.font_size
+            + (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size
+        )
+        doc.x = left_x_circles
+        row_counter = 1
+
         for _ in range(self.rating):
-            draw_filled_circle(doc)
+            if row_counter > circles_per_row:
+                row_counter = 1
+                doc.x = left_x_circles
+                doc.y += doc.font_size
+
+            draw_filled_circle(doc, doc.font_size)
+            row_counter += 1
 
         for _ in range(self.rating_total - self.rating):
-            draw_empty_circle(doc)
+            if row_counter > circles_per_row:
+                row_counter = 1
+                doc.x = left_x_circles
+                doc.y += doc.font_size
+
+            draw_empty_circle(doc, doc.font_size)
+            row_counter += 1
 
 
-def draw_filled_circle(doc: Document) -> None:
+def draw_filled_circle(doc: Document, spacing: float) -> None:
     doc.circle(
         x=doc.x,
         y=doc.y,
         r=doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
         style="FD",
     )
-    doc.set_x(doc.x + doc.font_size)
+    doc.set_x(doc.x + spacing)
 
 
-def draw_empty_circle(doc: Document) -> None:
+def draw_empty_circle(doc: Document, spacing: float) -> None:
     doc.circle(
         x=doc.x,
         y=doc.y,
         r=doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
         style="D",
     )
-    doc.set_x(doc.x + doc.font_size)
+    doc.set_x(doc.x + spacing)
