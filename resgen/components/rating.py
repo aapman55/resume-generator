@@ -1,7 +1,9 @@
+import copy
 import math
+from typing import List
 
-from fpdf import YPos
-from pydantic import Field
+from fpdf import YPos, XPos
+from pydantic import Field, BaseModel, root_validator
 
 from resgen.core.colours import Colour
 from resgen.core.component import Component
@@ -11,9 +13,64 @@ from resgen.core.style import StyleRegistry
 CIRCLE_TO_FONT_SIZE_RATIO = 0.7
 
 
+class RatingListContents(BaseModel):
+    rating: int = Field(..., description="The amount of points given", ge=0)
+    rating_text: str = Field(..., description="What is the rating about")
+
+
+class TitledCircleRatingList(Component):
+    title: str = Field(..., description="Title for the rating list")
+    title_style: str = Field(..., description="Style for the title")
+    rating_total: int = Field(
+        5, description="The total amount of points to be given", gt=0
+    )
+    rating_color: Colour = Field(
+        Colour.white(), description="Color of the rating symbols"
+    )
+    rating_text_style: str = Field(..., description="Style of the rating text")
+    rating_text_width: float = Field(
+        25, description="Width of box for description. Default is 25 mm."
+    )
+    line_width: int = Field(
+        2, description="Line width. X times the default width of 0.2 mm"
+    )
+    ratings: List[RatingListContents] = Field(
+        ..., description="List of ratings with description"
+    )
+
+    def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
+        style_registry.get(self.title_style).activate(doc)
+        doc.multi_cell(
+            w=0,
+            txt=self.title,
+            new_x=XPos.LMARGIN,
+        )
+
+        common_config = copy.deepcopy(self.dict())
+        #  Remove the ratings
+        common_config.pop("ratings")
+
+        remove_margins_config = {
+            "left_padding": 0,
+            "right_padding": 0,
+            "bottom_padding": 0,
+            "top_padding": 0,
+        }
+        common_config.update(remove_margins_config)
+
+        for rating in self.ratings:
+            CircleRating(
+                **common_config,
+                rating=rating.rating,
+                rating_text=rating.rating_text,
+            ).build(doc=doc, style_registry=style_registry)
+
+
 class CircleRating(Component):
-    rating_total: int = Field(5, description="The total amount of points to be given")
-    rating: int = Field(..., description="The amount of points given")
+    rating_total: int = Field(
+        5, description="The total amount of points to be given", gt=0
+    )
+    rating: int = Field(..., description="The amount of points given", ge=0)
     rating_color: Colour = Field(
         Colour.white(), description="Color of the rating symbols"
     )
@@ -25,6 +82,17 @@ class CircleRating(Component):
     line_width: int = Field(
         2, description="Line width. X times the default width of 0.2 mm"
     )
+
+    @root_validator
+    def validate_rating_not_larger_than_total(cls, values):
+        rating = values.get("rating")
+        rating_total = values.get("rating_total")
+        if rating > rating_total:
+            raise ValueError(
+                f"The value of the rating is larger than the total. ('{rating}' > '{rating_total}')"
+            )
+
+        return values
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
         style_registry.get(self.rating_text_style).activate(doc)
@@ -75,6 +143,9 @@ class CircleRating(Component):
 
             draw_empty_circle(doc, doc.font_size)
             row_counter += 1
+
+        # Reset x and y ready for the next component
+        doc.ln(doc.font_size)
 
 
 def draw_filled_circle(doc: Document, spacing: float) -> None:
