@@ -1,6 +1,6 @@
-from typing import List
+from typing import List, Optional
 
-from fpdf import XPos, Align
+from fpdf import XPos, Align, YPos
 from pydantic import Field, BaseModel
 
 from resgen.core.component import Component
@@ -13,6 +13,9 @@ class Experience(BaseModel):
     experience_start: str = Field(..., description="Begin date")
     experience_end: str = Field("Present", description="End date")
     description: str = Field(..., description="What did you do")
+    skills_used: Optional[List[str]] = Field(
+        default_factory=list, description="List of skills used during this experience."
+    )
 
     @property
     def experience_range(self) -> str:
@@ -42,6 +45,9 @@ class ExperiencesDetailed(Component):
     )
     spacing_between_experience_elements: float = Field(
         1.0, description="Space between elements of an experience"
+    )
+    skills_used_title_style: Optional[str] = Field(
+        None, description="Reference to the registered style_id"
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
@@ -77,6 +83,23 @@ class ExperiencesDetailed(Component):
             # Description
             style_registry.get(self.description_style).activate(doc)
             doc.multi_cell(w=0, txt=experience.description, new_x=XPos.LEFT)
+
+            # Skills
+            if experience.skills_used:
+                doc.ln(self.spacing_between_experience_elements)
+                style_registry.get(
+                    self.skills_used_title_style or self.title_style
+                ).activate(doc)
+
+                doc.cell(
+                    txt="Skills used: ",
+                )
+                previous_font_size = doc.font_size
+                style_registry.get(self.description_style).activate(doc)
+
+                # Calculate new Y such that the bottoms coincide
+                doc.set_xy(doc.x, doc.y + (previous_font_size - doc.font_size) * 0.8)
+                doc.multi_cell(w=0, txt=", ".join(experience.skills_used))
 
             # Some padding at the end
             doc.ln(self.spacing_between_experiences)
