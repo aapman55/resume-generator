@@ -102,6 +102,15 @@ components:
     experience_start: 2020 Jan
     description: >
       As a purple pig, I possess a remarkable talent for doing nothing. My ability to simply relax and enjoy the moment is unparalleled, and it's a testament to my innate sense of contentment. While others may feel the need to constantly be doing something, I understand the value of taking a breather and letting my mind and body recharge. My talent for doing nothing is truly impressive, and it's a quality that I celebrate and embrace.
+    skills_used:
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
   - title: Mud roller
     experience_start: 2015 Jan
     experience_end: 2020 June
@@ -110,6 +119,23 @@ components:
 
 
       In addition to being an expert in rolling in the mud, I am also adept at using it as a tool for socialization. Rolling in the mud is a way for me to bond with other pigs and to establish my position in the herd. The act of rolling in the mud together creates a sense of camaraderie and trust among us, which is crucial for our survival. My ability to roll in the mud not only demonstrates my physical prowess but also my social intelligence. I am a master of the mud, and I use it to my advantage in every way possible.
+    skills_used:
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
+      - Rolling in the mud
+      - yawning
 - component: resgen.components.experience.ExperiencesCompact
   experiences_title: Education
   experiences_title_style: headline
