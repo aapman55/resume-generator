@@ -56,4 +56,3 @@ class TestDocumentBuilder(unittest.TestCase):
         inputs = self.minimal_inputs
         builder = DocumentBuilder(**inputs)
         builder.build()
-
