@@ -21,7 +21,7 @@ jobs:
       - run: |
           poetry config virtualenvs.create false
           poetry install --no-root
-      - run: pytest ./tests/ --doctest-modules --junitxml=junit/test-results.xml --cov=resgen --cov-report=xml --cov-report=html
+      - run: pytest ./tests/ --doctest-modules --junitxml=./reports/unit/junit.xml --cov=resgen --cov-report=xml:./reports/coverage/coverage.xml --cov-report=html
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
@@ -29,3 +29,8 @@ jobs:
           name: Unit tests            # Name of the check run which will be created
           path: junit/test-results.xml  # Path to test results
           reporter: java-junit        # Format of test results
+      - name: Coverage Reports
+        uses: xportation/junit-coverage-report@main
+        with:
+          junit-path: ./reports/unit/unit.xml
+          coverage-path: ./reports/coverage/coverage.xml
