@@ -18,6 +18,8 @@ jobs:
         with:
           python-version: 3.10.x
       - run: pip install pytest pytest-cov poetry
-      - run: poetry install --no-root
+      - run: |
+          poetry config virtualenvs.create false
+          poetry install --no-root
       - run: pip list
       - run: pytest ./tests/ --doctest-modules --junitxml=junit/test-results.xml --cov-report=xml --cov-report=html
