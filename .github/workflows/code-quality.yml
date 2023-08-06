@@ -27,10 +27,10 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
           name: Unit tests            # Name of the check run which will be created
-          path: reports/unit/unit.xml  # Path to test results
+          path: ./reports/unit/junit.xml  # Path to test results
           reporter: java-junit        # Format of test results
       - name: Coverage Reports
         uses: xportation/junit-coverage-report@main
         with:
-          junit-path: ./reports/unit/unit.xml
+          junit-path: ./reports/unit/junit.xml
           coverage-path: ./reports/coverage/coverage.xml
