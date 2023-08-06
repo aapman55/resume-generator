@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest import TestCase
 
 from resgen.core.yamlconfig import load_yaml
@@ -5,7 +6,7 @@ from resgen.core.yamlconfig import load_yaml
 
 class TestYamlConfig(TestCase):
     def test_load_yaml(self):
-        actual = load_yaml("./tests/parser/mock_yaml.yaml")
+        actual = load_yaml(str(Path(__file__).parent / "mock_yaml.yaml"))
         expected = {
             "name": "test_yaml",
             "page_settings": {
