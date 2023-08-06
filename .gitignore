@@ -161,3 +161,4 @@ cython_debug/
 
 # Ignore example pdfs in example folder
 examples/**/*.pdf
+/junit/
