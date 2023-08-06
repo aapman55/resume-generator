@@ -50,7 +50,9 @@ class Component(BaseModel, ABC):
 
     @abstractmethod
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
-        ...
+        """
+        To be implemented by child class
+        """
 
 
 def init_class(full_class_path: str) -> Any:
