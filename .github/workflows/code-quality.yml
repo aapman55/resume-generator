@@ -21,7 +21,7 @@ jobs:
       - run: |
           poetry config virtualenvs.create false
           poetry install --no-root
-      - run: pytest ./tests/ --doctest-modules --junitxml=./reports/unit/junit.xml --cov=resgen --cov-report=xml:./reports/coverage/coverage.xml --cov-report=html
+      - run: pytest ./tests/ --doctest-modules --junitxml=./reports/unit/junit.xml --cov=. --cov-report=xml:./reports/coverage/coverage.xml --cov-report=html
       - name: Test Report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
