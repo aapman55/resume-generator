@@ -1,7 +1,8 @@
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, call
 
 from resgen.core.builder import DocumentBuilder
+from resgen.core.document import Document
 
 
 class TestDocumentBuilder(unittest.TestCase):
@@ -51,8 +52,15 @@ class TestDocumentBuilder(unittest.TestCase):
 
         self.assertEqual(mock_document.register_font.call_count, 2)
 
-    @unittest.mock.patch("resgen.core.builder.Document")
-    def test_build(self, mock_document):
+    @unittest.mock.patch.object(Document, "output", new=MagicMock())
+    def test_build(self):
+        """
+        This test runs through all actual functions of fpdf but just
+        patches the output method
+        """
         inputs = self.minimal_inputs
         builder = DocumentBuilder(**inputs)
         builder.build()
+
+        self.assertEqual(Document.output.call_args_list, [call("path/to/output.pdf")])
+
