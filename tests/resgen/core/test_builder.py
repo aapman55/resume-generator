@@ -63,4 +63,3 @@ class TestDocumentBuilder(unittest.TestCase):
         builder.build()
 
         self.assertEqual(Document.output.call_args_list, [call("path/to/output.pdf")])
-
