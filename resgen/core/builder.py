@@ -57,6 +57,10 @@ class DocumentBuilder(BaseModel):
             for component in self.sidebar_components:
                 init_component(component).build(document, self.style_registry)
 
+        # Give a warning when sidebar_components are defined but the sidebar is not
+        if self.sidebar_components and not self.page_settings.sidebar:
+            print("WARNING: You have defined sidebar components but not a sidebar!")
+
         document.output(self.output_name)
 
         return document
