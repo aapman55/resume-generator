@@ -1,4 +1,3 @@
-import pdb
 from abc import ABC
 
 from fpdf import FPDF
