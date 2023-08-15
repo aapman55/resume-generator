@@ -6,6 +6,7 @@ from resgen.components.rating import (
     draw_circle,
     CircleRating,
     CIRCLE_TO_FONT_SIZE_RATIO,
+    TitledCircleRatingList,
 )
 from resgen.core.document import Document
 from resgen.core.page_settings import SideBar
@@ -97,7 +98,7 @@ class TestCircleRating(unittest.TestCase):
         )
 
     def test_add_pdf_content_multi_line_circles(self) -> None:
-        width = 60
+        width = 50
         sidebar = SideBar(
             width=width,
             align_left=True,
@@ -124,8 +125,59 @@ class TestCircleRating(unittest.TestCase):
             + doc.font_size
             # Reposition due to circle size
             + adjust_y_for_circle_size
-            # circles just fit on 2 lines so extra font_size
-            + doc.font_size
+            # circles fit on 3 lines so 2 extra font_size
+            + doc.font_size * 2
             # This one is after the circles
             + doc.font_size,
+        )
+
+
+class TestTitledCircleRatingList(unittest.TestCase):
+    def setUp(self) -> None:
+        self.style_registry = StyleRegistry(
+            styles=[
+                {
+                    "id": "default",
+                    "family": "helvetica",
+                },
+            ]
+        )
+
+    def test_add_pdf_content(self) -> None:
+        doc = Document()
+        rating = TitledCircleRatingList(
+            title="dummy title",
+            title_style="default",
+            rating_total=5,
+            rating_text_style="default",
+            rating_text_width=25,
+            ratings=[
+                {
+                    "rating_text": "rating1",
+                    "rating": 3,
+                },
+                {
+                    "rating_text": "rating2",
+                    "rating": 3,
+                },
+            ],
+        )
+
+        doc.add_page()
+
+        self.assertAlmostEqual(doc.y, 10)
+        rating.add_pdf_content(doc=doc, style_registry=self.style_registry)
+
+        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size
+
+        self.assertAlmostEqual(
+            doc.y,
+            # Starting point
+            10
+            # title
+            + doc.font_size
+            # Reposition due to circle size
+            + adjust_y_for_circle_size * len(rating.ratings)
+            # This one is after the circles
+            + doc.font_size * len(rating.ratings),
         )
