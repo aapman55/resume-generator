@@ -1,4 +1,3 @@
-import pdb
 from abc import ABC
 
 from fpdf import FPDF
@@ -25,10 +24,14 @@ class Document(FPDF, ABC):
         self.in_main_content = True
 
     def header(self):
-        pass
+        """
+        If required you can create a child class and override this method
+        """
 
     def footer(self):
-        pass
+        """
+        If required you can create a child class and override this method
+        """
 
     def register_font(self, font: Font) -> None:
         self.add_font(
@@ -58,13 +61,14 @@ class Document(FPDF, ABC):
 
         self.set_fill_color(self.sidebar.fill_colour.to_device_rgb())
 
-        self.rect(
-            x=top_left_x,
-            y=top_left_y,
-            w=self.sidebar.width,
-            h=self.h,
-            style="F",  # Fill rectangle
-        )
+        with self.local_context(fill_opacity=self.sidebar.fill_colour.a):
+            self.rect(
+                x=top_left_x,
+                y=top_left_y,
+                w=self.sidebar.width,
+                h=self.h,
+                style="F",  # Fill rectangle
+            )
 
         self.set_fill_color(original_fill_colour)
 

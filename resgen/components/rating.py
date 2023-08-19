@@ -132,7 +132,7 @@ class CircleRating(Component):
                 doc.x = left_x_circles
                 doc.y += doc.font_size
 
-            draw_filled_circle(doc, doc.font_size)
+            draw_circle(doc=doc, spacing=doc.font_size, filled=True)
             row_counter += 1
 
         for _ in range(self.rating_total - self.rating):
@@ -141,28 +141,18 @@ class CircleRating(Component):
                 doc.x = left_x_circles
                 doc.y += doc.font_size
 
-            draw_empty_circle(doc, doc.font_size)
+            draw_circle(doc=doc, spacing=doc.font_size, filled=False)
             row_counter += 1
 
         # Reset x and y ready for the next component
         doc.ln(doc.font_size)
 
 
-def draw_filled_circle(doc: Document, spacing: float) -> None:
+def draw_circle(doc: Document, spacing: float, filled: bool = True) -> None:
     doc.circle(
         x=doc.x,
         y=doc.y,
         r=doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
-        style="FD",
-    )
-    doc.set_x(doc.x + spacing)
-
-
-def draw_empty_circle(doc: Document, spacing: float) -> None:
-    doc.circle(
-        x=doc.x,
-        y=doc.y,
-        r=doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
-        style="D",
+        style="FD" if filled else "D",
     )
     doc.set_x(doc.x + spacing)

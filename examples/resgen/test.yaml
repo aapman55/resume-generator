@@ -9,6 +9,7 @@ page_settings:
       r: 204
       g: 171
       b: 222
+      a: 0.8
     width: 60
 custom_fonts:
 - family: Tektur
