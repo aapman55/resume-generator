@@ -1,4 +1,7 @@
-import importlib
+"""
+Module for the abstract class for all components
+"""
+
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from importlib import import_module
@@ -12,6 +15,10 @@ from resgen.core.style import StyleRegistry
 
 
 class Component(BaseModel, ABC):
+    """
+    Super class for all the Components
+    """
+
     top_padding: int = Field(5, description="How much space before the component in mm")
     bottom_padding: int = Field(
         5, description="How much space after the component in mm"
@@ -23,6 +30,15 @@ class Component(BaseModel, ABC):
     fill_colour: Colour = Field(None, description="Background colour in RGB")
 
     def build(self, doc: Document, style_registry: StyleRegistry):
+        """
+        This is the method that is called in the builder.
+        It sets configurations before calling the component specific
+        add_pdf_content and reverts the configs back to the original state
+        afterwards.
+        :param doc:
+        :param style_registry:
+        :return:
+        """
         # Save previous settings
         original_lmargin = doc.l_margin
         original_rmargin = doc.r_margin
@@ -56,7 +72,11 @@ class Component(BaseModel, ABC):
 
 
 def init_class(full_class_path: str) -> Any:
-    import sys
+    """
+    Initializes a class based on a dot separated string
+    :param full_class_path:
+    :return:
+    """
 
     module = ".".join(full_class_path.split(".")[:-1])
     clazz = full_class_path.split(".")[-1]
@@ -65,6 +85,12 @@ def init_class(full_class_path: str) -> Any:
 
 
 def init_component(yamlconfig: Dict) -> Component:
+    """
+    Initializes a component.
+    The config should contain the key component.
+    :param yamlconfig:
+    :return:
+    """
     yamlconfig_copy = deepcopy(yamlconfig)
     component = yamlconfig_copy.pop("component")
 
