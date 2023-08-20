@@ -1,3 +1,9 @@
+"""
+Makes it possible to call
+```
+python -m resgen
+```
+"""
 import sys
 from pathlib import Path
 

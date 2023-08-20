@@ -1,6 +1,9 @@
+"""
+Module for experiences
+"""
 from typing import List, Optional
 
-from fpdf import XPos, Align, YPos
+from fpdf import XPos, Align
 from pydantic import Field, BaseModel
 
 from resgen.core.component import Component
@@ -9,6 +12,10 @@ from resgen.core.style import StyleRegistry
 
 
 class Experience(BaseModel):
+    """
+    Common inputs for Experiences
+    """
+
     title: str = Field(..., description="Job description")
     experience_start: str = Field(..., description="Begin date")
     experience_end: str = Field("Present", description="End date")
@@ -19,6 +26,11 @@ class Experience(BaseModel):
 
     @property
     def experience_range(self) -> str:
+        """
+        Convenience method to concatenate begin and end. Or to omit end if it is te same
+        as the begin.
+        :return:
+        """
         if self.experience_start.strip() == self.experience_end.strip():
             return self.experience_start.strip()
 
@@ -26,6 +38,10 @@ class Experience(BaseModel):
 
 
 class ExperiencesDetailed(Component):
+    """
+    This component is meant for longer descriptions
+    """
+
     experiences_title: str = Field(
         "Employment History", description="Title for this set of experiences"
     )
@@ -51,6 +67,12 @@ class ExperiencesDetailed(Component):
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         style_registry.get(self.experiences_title_style).activate(doc)
 
         doc.multi_cell(
@@ -71,7 +93,7 @@ class ExperiencesDetailed(Component):
 
             # Title
             style_registry.get(self.title_style).activate(doc)
-            height = doc.multi_cell(
+            doc.multi_cell(
                 w=0,
                 txt=experience.title,
                 new_x=XPos.LMARGIN,
@@ -106,6 +128,10 @@ class ExperiencesDetailed(Component):
 
 
 class ExperiencesCompact(Component):
+    """
+    This component is meant for oneliners
+    """
+
     experiences_title: str = Field(
         "Employment History", description="Title for this set of experiences"
     )
@@ -131,6 +157,12 @@ class ExperiencesCompact(Component):
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         style_registry.get(self.experiences_title_style).activate(doc)
 
         doc.multi_cell(
@@ -152,7 +184,7 @@ class ExperiencesCompact(Component):
 
             # Title
             style_registry.get(self.title_style).activate(doc)
-            height = doc.multi_cell(
+            doc.multi_cell(
                 w=0,
                 txt=experience.title,
                 new_x=XPos.LEFT,

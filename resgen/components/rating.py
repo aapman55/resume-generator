@@ -1,3 +1,6 @@
+"""
+Module for rating components.
+"""
 import copy
 import math
 from typing import List
@@ -14,11 +17,21 @@ CIRCLE_TO_FONT_SIZE_RATIO = 0.7
 
 
 class RatingListContents(BaseModel):
+    """
+    Used for pydantic input validation
+    """
+
     rating: int = Field(..., description="The amount of points given", ge=0)
     rating_text: str = Field(..., description="What is the rating about")
 
 
 class TitledCircleRatingList(Component):
+    """
+    Component that contains a list of ratings. The rating is
+    shown as filled circles. If it is not a full rating the rest of
+    the circles are just an outline.
+    """
+
     title: str = Field(..., description="Title for the rating list")
     title_style: str = Field(..., description="Style for the title")
     rating_total: int = Field(
@@ -39,6 +52,12 @@ class TitledCircleRatingList(Component):
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
@@ -67,6 +86,12 @@ class TitledCircleRatingList(Component):
 
 
 class CircleRating(Component):
+    """
+    Component that contains a single rating. The rating is
+    shown as filled circles. If it is not a full rating the rest of
+    the circles are just an outline.
+    """
+
     rating_total: int = Field(
         5, description="The total amount of points to be given", gt=0
     )
@@ -85,6 +110,12 @@ class CircleRating(Component):
 
     @root_validator
     def validate_rating_not_larger_than_total(cls, values):
+        """
+        This validator makes sure that the total ratings is a higher number
+        than the rating.
+        :param values:
+        :return:
+        """
         rating = values.get("rating")
         rating_total = values.get("rating_total")
         if rating > rating_total:
@@ -95,6 +126,12 @@ class CircleRating(Component):
         return values
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         style_registry.get(self.rating_text_style).activate(doc)
 
         doc.multi_cell(
@@ -149,6 +186,13 @@ class CircleRating(Component):
 
 
 def draw_circle(doc: Document, spacing: float, filled: bool = True) -> None:
+    """
+    Draw circle at current position and move to the next x position
+    :param doc:
+    :param spacing:
+    :param filled:
+    :return:
+    """
     doc.circle(
         x=doc.x,
         y=doc.y,

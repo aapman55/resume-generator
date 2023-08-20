@@ -1,3 +1,7 @@
+"""
+This module contains the builder that loops
+through all the components.
+"""
 from typing import List, Dict
 
 from pydantic import BaseModel, Field
@@ -10,6 +14,10 @@ from resgen.core.style import StyleRegistry
 
 
 class DocumentBuilder(BaseModel):
+    """
+    This is the builder that assembles the whole pdf
+    """
+
     document_class_name: str = Field(default="resgen.core.document.Resume")
     page_settings: PageSettings = Field(PageSettings(), description="Page settings")
     output_name: str = Field(..., description="The filename of the exported PDF.")
@@ -26,10 +34,19 @@ class DocumentBuilder(BaseModel):
     )
 
     def register_fonts(self, doc: Document) -> None:
+        """
+        Method to register custom-fonts with the FPDF class
+        :param doc:
+        :return:
+        """
         for font in self.custom_fonts:
             doc.register_font(font)
 
     def build(self) -> Document:
+        """
+        Main assembly method
+        :return:
+        """
         document_class = init_class(self.document_class_name)
         document = document_class(
             orientation=self.page_settings.orientation.value,

@@ -1,3 +1,6 @@
+"""
+Module for list components
+"""
 from typing import List, Dict
 
 from fpdf import XPos, Align, YPos
@@ -9,6 +12,11 @@ from resgen.core.style import StyleRegistry
 
 
 class TitledList(Component):
+    """
+    Component for listing for example skills
+    Includes descriptive title for the list
+    """
+
     title: str = Field(..., description="Title of the list")
     title_style: str = Field(
         ..., description="ID of registered style in the style registry."
@@ -19,6 +27,12 @@ class TitledList(Component):
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         # Title
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
@@ -38,6 +52,12 @@ class TitledList(Component):
 
 
 class TitledKeyValueList(Component):
+    """
+    Component for list with key value pairs.
+    For example if you want to list your contact information.
+    Includes title.
+    """
+
     title: str = Field(..., description="Title of the list")
     title_style: str = Field(
         ..., description="ID of registered style in the style registry."
@@ -50,6 +70,12 @@ class TitledKeyValueList(Component):
     )
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
+        """
+        Draw the component specific content
+        :param doc: resgen Document class
+        :param style_registry: resgen StyleRegistry class
+        :return:
+        """
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
@@ -59,7 +85,6 @@ class TitledKeyValueList(Component):
 
         # List values
         style_registry.get(self.key_values_style).activate(doc)
-        available_width = doc.w - doc.l_margin - doc.r_margin
         for k, v in self.key_values.items():
             # cell size wraps around content
             doc.cell(

@@ -1,3 +1,6 @@
+"""
+Module for cli interaction
+"""
 import argparse
 import sys
 from pathlib import Path
@@ -7,6 +10,11 @@ from resgen.core.builder import DocumentBuilder
 
 
 def run() -> None:
+    """
+    This is the main function called via the cli.
+    This function is installed as script and also in the __main__.py
+    :return:
+    """
     # Add local folder to path so that plugins work
     sys.path.append(str(Path(".").resolve()))
 
