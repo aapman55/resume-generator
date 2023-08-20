@@ -1,0 +1,83 @@
+# Project information
+site_name: Resume Generator
+site_url: https://aapman55.github.io/resume-generator/
+site_author: aapman
+site_description: >-
+  Documentation site for the Resume Generator library.
+
+# Copyright
+copyright: Copyright &copy; 2023 Aapman
+
+# Theme
+theme:
+  name: material
+#  logo: assets/images/monkeyDocsLogo.png
+#  favicon: assets/images/monkeyDocsLogo.png
+  features:
+    - content.code.annotate
+    - navigation.expand
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - navigation.tabs
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.integrate
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  custom_dir: docs/.overrides
+
+use_directory_urls: true
+
+# Enable pencil icon to directly modify page
+repo_name: aapman55/resume-generator
+repo_url: https://github.com/aapman55/resume-generator
+edit_uri: edit/main/docs/
+
+# Plugins
+plugins:
+  - search
+  - git-revision-date-localized:
+      type: datetime
+
+markdown_extensions:
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.magiclink
+  - pymdownx.superfences
+  - pymdownx.snippets #Enables embedding external code files
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - def_list
+  - pymdownx.details
+  - admonition
+  - meta
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+# Page tree
+nav:
+  - Home: index.md
