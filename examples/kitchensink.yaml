@@ -1,5 +1,5 @@
 document_class_name: resgen.core.document.Document
-output_name: ./examples/resgen/yaml_example.pdf
+output_name: ./examples/kitchensink_example.pdf
 page_settings:
   orientation: PORTRAIT
   papersize: A4
@@ -13,7 +13,7 @@ page_settings:
     width: 60
 custom_fonts:
 - family: Tektur
-  font_file_path: ./examples/resgen/custom_fonts/Tektur-Regular.ttf
+  font_file_path: ./examples/custom_fonts/Tektur-Regular.ttf
   font_style: ""
 style_registry:
   styles:
@@ -157,10 +157,26 @@ components:
 
 sidebar_components:
 - component: resgen.components.image.RoundedProfilePicture
-  image_path: ./examples/resgen/img/pig.png
+  image_path: ./examples/img/pig.png
   left_padding: 2
   right_padding: 2
   top_padding: 2
+- component: resgen.components.list.TitledKeyValueList
+  title: Personalia
+  title_style: general
+  key_values:
+    Name: Knorrie the most gorgeous purple pig
+    Location: Farmhouse
+  key_values_style: sidebar-tektur
+
+- component: resgen.components.list.TitledList
+  title: Skills
+  title_style: general
+  list_values:
+    - Pig
+    - Pigs
+    - Farm
+  list_values_style: sidebar-tektur
 - component: resgen.components.rating.CircleRating
   rating: 9
   rating_total: 14
@@ -181,19 +197,3 @@ sidebar_components:
     rating_text: Piggyness
   - rating: 15
     rating_text: purpleness
-- component: resgen.components.list.TitledKeyValueList
-  title: Personalia
-  title_style: general
-  key_values:
-    Name: Knorrie the most gorgeous purple pig
-    Location: Farmhouse
-  key_values_style: sidebar-tektur
-
-- component: resgen.components.list.TitledList
-  title: Skills
-  title_style: general
-  list_values:
-    - Pig
-    - Pigs
-    - Farm
-  list_values_style: sidebar-tektur
