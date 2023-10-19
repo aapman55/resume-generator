@@ -51,13 +51,18 @@ class Component(BaseModel, ABC):
         # Set padding
         doc.set_left_margin(original_lmargin + self.left_padding)
         doc.set_right_margin(original_rmargin + self.right_padding)
-        doc.ln(self.top_padding)
+
+        # doc.ln takes latest height when height is false.
+        #  0 is also false
+        if self.top_padding:
+            doc.ln(self.top_padding)
 
         # contents
         self.add_pdf_content(doc, style_registry)
 
         # bottom padding
-        doc.ln(self.bottom_padding)
+        if self.bottom_padding:
+            doc.ln(self.bottom_padding)
 
         # restore previous settings
         doc.set_left_margin(original_lmargin)
