@@ -138,6 +138,10 @@ class Document(FPDF, ABC):
         if self.sidebar:
             self._draw_sidebar_background()
 
+    @property
+    def content_width(self) -> float:
+        return self.w - self.l_margin - self.r_margin
+
 
 class Resume(Document):
     """

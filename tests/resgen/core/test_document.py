@@ -109,6 +109,13 @@ class TestDocument(unittest.TestCase):
         doc.add_page()
         self.assertEqual(len(doc.pages), 2)
 
+    def test_content_width(self):
+        doc = Document()
+        doc.set_left_margin(10)
+        doc.set_right_margin(20)
+
+        self.assertEqual(doc.w - 30, doc.content_width)
+
 
 class TestResume(unittest.TestCase):
     def test_header(self) -> None:
