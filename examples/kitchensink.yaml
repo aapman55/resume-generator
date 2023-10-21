@@ -92,6 +92,16 @@ components:
     r: 230
     g: 230
     b: 230
+- component: resgen.components.horizontal_list.CircleSeparatedHorizontalList
+  circle_fill_colour:
+    r: 155
+    g: 155
+    b: 155
+  list_values:
+    - Rolling in the mud like a good piglet
+    - Loathing around like nothing is important
+    - Who is a good boy?
+  list_values_style: tektur
 - component: resgen.components.experience.ExperiencesDetailed
   experiences_title_style: headline
   begin_end_style: general
