@@ -14,6 +14,7 @@ class CircleSeparatedHorizontalList(Component):
     """
     Constructs a horizontal list separated by filled circles
     """
+
     list_values: List[str] = Field(..., description="Contents of the list")
     list_values_style: str = Field(
         ..., description="ID of registered style in the style registry."
