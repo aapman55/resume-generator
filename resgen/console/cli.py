@@ -27,3 +27,6 @@ def run() -> None:
     builder = DocumentBuilder(**yaml_content)
 
     builder.build()
+
+    # Output path
+    print(yaml_content.get("output_name"))
