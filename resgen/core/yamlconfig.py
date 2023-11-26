@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Dict
 
 import yaml
+from yamlinclude import YamlIncludeConstructor
 
 
 def load_yaml(path: str) -> Dict:
@@ -18,4 +19,6 @@ def load_yaml(path: str) -> Dict:
     :param path: Path to the yaml file
     :return: A dictionary of the yaml contents
     """
+    YamlIncludeConstructor.add_to_loader_class(loader_class=yaml.SafeLoader)
+
     return yaml.safe_load(Path(path).read_text())
