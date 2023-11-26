@@ -1,0 +1,5 @@
+component: resgen.components.profile.ProfileHeadline
+name: Knorrie the purple pig
+name_style: headline
+job_title: Producer | CEO | PIG
+job_title_style: general

@@ -50,11 +50,7 @@ style_registry:
     font_style: ""
     id: headline
 components:
-- component: resgen.components.profile.ProfileHeadline
-  name: Knorrie the purple pig
-  name_style: headline
-  job_title: Producer | CEO
-  job_title_style: general
+- !include ./examples/profile_headline.yaml
 - component: resgen.components.profile.ProfileDescription
   text: >
     Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 

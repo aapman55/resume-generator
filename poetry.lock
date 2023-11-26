@@ -1027,6 +1027,23 @@ files = [
 pyyaml = "*"
 
 [[package]]
+name = "pyyaml-include"
+version = "1.3.1"
+description = "Extending PyYAML with a custom constructor for including YAML files within YAML files"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pyyaml-include-1.3.1.tar.gz", hash = "sha256:4cb3b4e1baae2ec251808fe1e8aed5d3d20699c541864c8e47ed866ab2f15039"},
+    {file = "pyyaml_include-1.3.1-py3-none-any.whl", hash = "sha256:e58525721a2938d29c4046350f8aad86f848660a770c29605e6f2700925fa753"},
+]
+
+[package.dependencies]
+PyYAML = ">=5.1,<7.0"
+
+[package.extras]
+toml = ["toml"]
+
+[[package]]
 name = "regex"
 version = "2023.8.8"
 description = "Alternative regular expression module, to replace re."
@@ -1342,4 +1359,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "531697039378f5209eb15c64d96af6d40a3a2a41bc75fbf7e38b07aad1202551"
+content-hash = "4b07f7632a608434317547eebb3c6d5bbf14ec542deaf4d7082ceee52606bb76"
