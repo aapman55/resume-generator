@@ -59,8 +59,8 @@ markdown_extensions:
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.magiclink
   - pymdownx.superfences
   - pymdownx.snippets #Enables embedding external code files
@@ -80,4 +80,10 @@ markdown_extensions:
 
 # Page tree
 nav:
-  - Home: index.md
+  - Home:
+    - home/index.md
+    - Getting Started: home/getting-started.md
+    - Architecture: home/architecture.md
+  - Components:
+      - components/index.md
+      - Profile Header: components/profile-header.md
