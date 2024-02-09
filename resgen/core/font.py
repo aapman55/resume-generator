@@ -1,6 +1,7 @@
 """
 Module for font
 """
+
 from enum import Enum
 from pydantic import BaseModel, Field
 

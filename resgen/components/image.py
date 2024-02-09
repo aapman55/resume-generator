@@ -1,6 +1,7 @@
 """
 Module for images
 """
+
 from pydantic import Field
 
 from resgen.core.component import Component

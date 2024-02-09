@@ -1,6 +1,7 @@
 """
 Module for list components
 """
+
 from typing import List, Dict
 
 from fpdf import XPos, Align, YPos

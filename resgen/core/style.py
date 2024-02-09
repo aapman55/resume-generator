@@ -1,6 +1,7 @@
 """
 This module contains all classes that are related to Styles
 """
+
 from typing import List
 
 from pydantic import BaseModel, Field
