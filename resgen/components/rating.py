@@ -1,6 +1,7 @@
 """
 Module for rating components.
 """
+
 import copy
 import math
 from typing import List

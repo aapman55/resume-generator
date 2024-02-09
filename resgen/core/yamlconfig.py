@@ -5,7 +5,6 @@ At this moment nothing custom is done. If in the future custom steps
 are needed, it is easier to change it centrally.
 """
 
-
 from pathlib import Path
 from typing import Dict
 

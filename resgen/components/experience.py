@@ -1,6 +1,7 @@
 """
 Module for experiences
 """
+
 from typing import List, Optional
 
 from fpdf import XPos, Align

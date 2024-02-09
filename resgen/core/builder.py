@@ -2,6 +2,7 @@
 This module contains the builder that loops
 through all the components.
 """
+
 from typing import List, Dict
 
 from pydantic import BaseModel, Field

@@ -1,6 +1,7 @@
 """
 Module for cli interaction
 """
+
 import argparse
 import sys
 from pathlib import Path

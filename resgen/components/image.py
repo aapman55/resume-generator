@@ -1,6 +1,7 @@
 """
 Module for images
 """
+
 from pydantic import Field
 
 from resgen.core.component import Component
@@ -27,7 +28,7 @@ class RoundedProfilePicture(Component):
         :return:
         """
         width = doc.w - doc.l_margin - doc.r_margin
-        original_image_filter = doc.image_filter
+        original_image_filter = doc.image_cache.image_filter
         if self.compress:
             doc.set_image_filter("DCTDecode")
 

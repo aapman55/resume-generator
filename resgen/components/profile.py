@@ -1,6 +1,7 @@
 """
 Module for profile related components
 """
+
 from fpdf import XPos
 from pydantic import Field
 
