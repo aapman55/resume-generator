@@ -20,7 +20,7 @@ class TestDocument(unittest.TestCase):
 
         self.assertIsNone(doc.sidebar)
         self.assertTrue(doc.in_main_content)
-        self.assertEqual(doc.cur_orientation, "P")
+        self.assertEqual(doc.cur_orientation.value, "P")
 
     def test_register_font(self) -> None:
         doc = Document()

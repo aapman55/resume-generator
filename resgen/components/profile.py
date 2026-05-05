@@ -12,7 +12,7 @@ from resgen.core.style import StyleRegistry
 
 class ProfileHeadline(Component):
     """
-    This components shows your name and your job role
+    This component shows your name and your job role
     """
 
     name: str = Field(..., description="Name of the person the resume is for")
@@ -34,13 +34,13 @@ class ProfileHeadline(Component):
         style_registry.get(self.name_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.name,
+            text=self.name,
             new_x=XPos.LEFT,
         )
         style_registry.get(self.job_title_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.job_title,
+            text=self.job_title,
             new_x=XPos.LEFT,
         )
 
@@ -79,7 +79,7 @@ class ProfileDescription(Component):
         self._add_vertical_margin(doc)
         doc.multi_cell(
             w=0,
-            txt=self.text.strip(),
+            text=self.text.strip(),
             fill=True if self.fill_colour else False,
             new_x=XPos.LEFT,
         )

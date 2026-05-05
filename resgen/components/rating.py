@@ -14,7 +14,8 @@ from resgen.core.component import Component
 from resgen.core.document import Document
 from resgen.core.style import StyleRegistry
 
-CIRCLE_TO_FONT_SIZE_RATIO = 0.7
+CIRCLE_TO_FONT_SIZE_RATIO = 0.5
+CIRCLE_SPACING_TO_FONT_SIZE_RATIO = 1.25
 
 
 class RatingListContents(BaseModel):
@@ -62,7 +63,7 @@ class TitledCircleRatingList(Component):
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.title,
+            text=self.title,
             new_x=XPos.LMARGIN,
         )
 
@@ -137,7 +138,7 @@ class CircleRating(Component):
 
         doc.multi_cell(
             w=self.rating_text_width,
-            txt=self.rating_text,
+            text=self.rating_text,
             new_y=YPos.LAST,
         )
 
@@ -148,18 +149,23 @@ class CircleRating(Component):
         # Center the circles
         doc.set_xy(
             x=doc.x,
-            y=doc.y + (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size,
+            y=doc.y + (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size,
         )
 
         r_margin_x = doc.w - doc.r_margin
         available_drawing_space = r_margin_x - doc.x
-        circles_per_row = math.floor(available_drawing_space / doc.font_size)
+        circles_per_row = math.floor(
+            available_drawing_space
+            / (doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO)
+        )
 
         # move x such that most right circle is at the margin
         left_x_circles = (
             r_margin_x
-            - circles_per_row * doc.font_size
-            + (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size
+            - circles_per_row * doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO
+            + (1 - CIRCLE_TO_FONT_SIZE_RATIO)
+            * doc.font_size
+            * CIRCLE_SPACING_TO_FONT_SIZE_RATIO
         )
         doc.x = left_x_circles
         row_counter = 1
@@ -168,18 +174,26 @@ class CircleRating(Component):
             if row_counter > circles_per_row:
                 row_counter = 1
                 doc.x = left_x_circles
-                doc.y += doc.font_size
+                doc.y += doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO
 
-            draw_circle(doc=doc, spacing=doc.font_size, filled=True)
+            draw_circle(
+                doc=doc,
+                spacing=doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO,
+                filled=True,
+            )
             row_counter += 1
 
         for _ in range(self.rating_total - self.rating):
             if row_counter > circles_per_row:
                 row_counter = 1
                 doc.x = left_x_circles
-                doc.y += doc.font_size
+                doc.y += doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO
 
-            draw_circle(doc=doc, spacing=doc.font_size, filled=False)
+            draw_circle(
+                doc=doc,
+                spacing=doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO,
+                filled=False,
+            )
             row_counter += 1
 
         # Reset x and y ready for the next component
@@ -195,9 +209,9 @@ def draw_circle(doc: Document, spacing: float, filled: bool = True) -> None:
     :return:
     """
     doc.circle(
-        x=doc.x,
-        y=doc.y,
-        r=doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
+        doc.x,
+        doc.y,
+        doc.font_size * CIRCLE_TO_FONT_SIZE_RATIO,
         style="FD" if filled else "D",
     )
     doc.set_x(doc.x + spacing)

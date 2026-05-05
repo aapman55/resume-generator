@@ -17,7 +17,7 @@ class Colour(BaseModel):
     r: int = Field(..., description="RED", ge=0, le=255)
     g: int = Field(..., description="GREEN", ge=0, le=255)
     b: int = Field(..., description="BLUE", ge=0, le=255)
-    a: Optional[float] = Field(None, description="ALFA", ge=0, le=1)
+    a: Optional[float] = Field(1.0, description="ALFA", ge=0, le=1)
 
     def to_device_rgb(self) -> DeviceRGB:
         """
