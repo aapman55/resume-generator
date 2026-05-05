@@ -19,9 +19,6 @@ class CircleSeparatedHorizontalList(Component):
     list_values_style: str = Field(
         ..., description="ID of registered style in the style registry."
     )
-    circle_to_font_ratio: float = Field(
-        0.8, description="How large should the circle be as a ratio of the font size"
-    )
     circle_fill_colour: Colour = Field(
         ..., description="Colour of the separator circles"
     )
@@ -29,6 +26,7 @@ class CircleSeparatedHorizontalList(Component):
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry):
         style_registry.get(self.list_values_style).activate(doc)
         lines = fit_list_on_lines(self.list_values, doc)
+        circle_radius = doc.font_size * 0.5
 
         # Backup active fill colour
         original_fill_colour = doc.fill_color
@@ -47,14 +45,14 @@ class CircleSeparatedHorizontalList(Component):
 
                 # Draw circle separator
                 doc.circle(
-                    x=doc.x,
-                    y=doc.y,
-                    r=doc.font_size * self.circle_to_font_ratio,
+                    doc.x + circle_radius,
+                    doc.y + circle_radius, # Center the circle at the center of the text
+                    circle_radius,
                     style="F",
                 )
 
                 # The circle does not progress the cursors, so we do it manually
-                doc.set_x(doc.x + doc.font_size * self.circle_to_font_ratio)
+                doc.set_x(doc.x + 2 * circle_radius)
             # Move to the next line
             doc.ln()
 

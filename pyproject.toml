@@ -10,7 +10,7 @@ packages = [{include = "resgen"}]
 resgen = 'resgen.console.cli:run'
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.14"
 fpdf2 = "^2.7.4"
 pydantic = "^1.10.9"
 pyyaml = "^6.0"

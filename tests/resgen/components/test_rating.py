@@ -6,6 +6,7 @@ from resgen.components.rating import (
     draw_circle,
     CircleRating,
     CIRCLE_TO_FONT_SIZE_RATIO,
+    CIRCLE_SPACING_TO_FONT_SIZE_RATIO,
     TitledCircleRatingList,
 )
 from resgen.core.document import Document
@@ -84,7 +85,7 @@ class TestCircleRating(unittest.TestCase):
 
         rating.add_pdf_content(doc=doc, style_registry=self.style_registry)
 
-        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size
+        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size
         self.assertAlmostEqual(
             doc.y,
             # Starting point
@@ -106,7 +107,7 @@ class TestCircleRating(unittest.TestCase):
         doc = Document(sidebar=sidebar)
         doc.add_page()
         rating = CircleRating(
-            rating_total=15,
+            rating_total=12,
             rating=7,
             rating_text="dummy_rating",
             rating_text_style="default",
@@ -116,7 +117,7 @@ class TestCircleRating(unittest.TestCase):
 
         rating.add_pdf_content(doc=doc, style_registry=self.style_registry)
 
-        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size
+        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size
         self.assertAlmostEqual(
             doc.y,
             # Starting point
@@ -126,7 +127,7 @@ class TestCircleRating(unittest.TestCase):
             # Reposition due to circle size
             + adjust_y_for_circle_size
             # circles fit on 3 lines so 2 extra font_size
-            + doc.font_size * 2
+            + doc.font_size * CIRCLE_SPACING_TO_FONT_SIZE_RATIO * 2
             # This one is after the circles
             + doc.font_size,
         )
@@ -166,9 +167,10 @@ class TestTitledCircleRatingList(unittest.TestCase):
         doc.add_page()
 
         self.assertAlmostEqual(doc.y, 10)
+        print(doc.y)
         rating.add_pdf_content(doc=doc, style_registry=self.style_registry)
 
-        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) / 2 * doc.font_size
+        adjust_y_for_circle_size = (1 - CIRCLE_TO_FONT_SIZE_RATIO) * doc.font_size
 
         self.assertAlmostEqual(
             doc.y,
