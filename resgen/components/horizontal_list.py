@@ -46,7 +46,8 @@ class CircleSeparatedHorizontalList(Component):
                 # Draw circle separator
                 doc.circle(
                     doc.x + circle_radius,
-                    doc.y + circle_radius, # Center the circle at the center of the text
+                    doc.y
+                    + circle_radius,  # Center the circle at the center of the text
                     circle_radius,
                     style="F",
                 )
