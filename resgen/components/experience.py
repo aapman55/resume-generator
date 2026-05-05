@@ -78,7 +78,7 @@ class ExperiencesDetailed(Component):
 
         doc.multi_cell(
             w=0,
-            txt=self.experiences_title,
+            text=self.experiences_title,
             new_x=XPos.LMARGIN,
         )
 
@@ -88,7 +88,7 @@ class ExperiencesDetailed(Component):
             # Time Period
             style_registry.get(self.begin_end_style).activate(doc)
             doc.cell(
-                txt=experience.experience_range,
+                text=experience.experience_range,
                 new_x=XPos.RIGHT,
             )
 
@@ -96,7 +96,7 @@ class ExperiencesDetailed(Component):
             style_registry.get(self.title_style).activate(doc)
             doc.multi_cell(
                 w=0,
-                txt=experience.title,
+                text=experience.title,
                 new_x=XPos.LMARGIN,
                 align=Align.R,
             )
@@ -105,7 +105,7 @@ class ExperiencesDetailed(Component):
 
             # Description
             style_registry.get(self.description_style).activate(doc)
-            doc.multi_cell(w=0, txt=experience.description, new_x=XPos.LEFT)
+            doc.multi_cell(w=0, text=experience.description, new_x=XPos.LEFT)
 
             # Skills
             if experience.skills_used:
@@ -115,14 +115,14 @@ class ExperiencesDetailed(Component):
                 ).activate(doc)
 
                 doc.cell(
-                    txt="Skills used: ",
+                    text="Skills used: ",
                 )
                 previous_font_size = doc.font_size
                 style_registry.get(self.description_style).activate(doc)
 
                 # Calculate new Y such that the bottoms coincide
                 doc.set_xy(doc.x, doc.y + (previous_font_size - doc.font_size) * 0.8)
-                doc.multi_cell(w=0, txt=", ".join(experience.skills_used))
+                doc.multi_cell(w=0, text=", ".join(experience.skills_used))
 
             # Some padding at the end
             doc.ln(self.spacing_between_experiences)
@@ -168,7 +168,7 @@ class ExperiencesCompact(Component):
 
         doc.multi_cell(
             w=0,
-            txt=self.experiences_title,
+            text=self.experiences_title,
             new_x=XPos.LMARGIN,
         )
 
@@ -179,7 +179,7 @@ class ExperiencesCompact(Component):
             style_registry.get(self.begin_end_style).activate(doc)
             doc.cell(
                 w=self.experience_timespan_width,
-                txt=experience.experience_range,
+                text=experience.experience_range,
                 new_x=XPos.RIGHT,
             )
 
@@ -187,7 +187,7 @@ class ExperiencesCompact(Component):
             style_registry.get(self.title_style).activate(doc)
             doc.multi_cell(
                 w=0,
-                txt=experience.title,
+                text=experience.title,
                 new_x=XPos.LEFT,
                 align=Align.L,
             )
@@ -198,7 +198,7 @@ class ExperiencesCompact(Component):
             # Description
             doc.set_x(retain_x)
             style_registry.get(self.description_style).activate(doc)
-            doc.multi_cell(w=0, txt=experience.description, new_x=XPos.LEFT)
+            doc.multi_cell(w=0, text=experience.description, new_x=XPos.LEFT)
 
             # Some padding at the end
             doc.ln(self.spacing_between_experiences)

@@ -63,7 +63,7 @@ class TitledCircleRatingList(Component):
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.title,
+            text=self.title,
             new_x=XPos.LMARGIN,
         )
 
@@ -138,7 +138,7 @@ class CircleRating(Component):
 
         doc.multi_cell(
             w=self.rating_text_width,
-            txt=self.rating_text,
+            text=self.rating_text,
             new_y=YPos.LAST,
         )
 

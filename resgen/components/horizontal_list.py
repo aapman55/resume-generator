@@ -37,7 +37,7 @@ class CircleSeparatedHorizontalList(Component):
         # Put the text and separators
         for line in lines:
             for i, value in enumerate(line):
-                doc.cell(txt=value)
+                doc.cell(text=value)
 
                 #  Do not draw the circle when it is the last element on the line
                 if i >= len(line) - 1:

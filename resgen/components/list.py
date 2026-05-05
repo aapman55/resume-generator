@@ -38,7 +38,7 @@ class TitledList(Component):
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.title,
+            text=self.title,
             new_x=XPos.LEFT,
         )
 
@@ -47,7 +47,7 @@ class TitledList(Component):
         for val in self.list_values:
             doc.multi_cell(
                 w=0,
-                txt=val,
+                text=val,
                 new_x=XPos.LEFT,
             )
 
@@ -80,7 +80,7 @@ class TitledKeyValueList(Component):
         style_registry.get(self.title_style).activate(doc)
         doc.multi_cell(
             w=0,
-            txt=self.title,
+            text=self.title,
             new_x=XPos.LEFT,
         )
 
@@ -89,7 +89,7 @@ class TitledKeyValueList(Component):
         for k, v in self.key_values.items():
             # cell size wraps around content
             doc.cell(
-                txt=k,
+                text=k,
                 align=Align.L,
             )
             # cell size extends to end
@@ -97,7 +97,7 @@ class TitledKeyValueList(Component):
             # next cell will start on a new line
             doc.multi_cell(
                 w=0,
-                txt=v,
+                text=v,
                 new_x=XPos.LMARGIN,
                 new_y=YPos.NEXT,
                 align=Align.R,
