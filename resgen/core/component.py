@@ -5,7 +5,7 @@ Module for the abstract class for all components
 from abc import ABC, abstractmethod
 from copy import deepcopy
 from importlib import import_module
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 
 from pydantic import BaseModel, Field
 
@@ -27,7 +27,7 @@ class Component(BaseModel, ABC):
     right_padding: int = Field(
         5, description="How much space after the component in mm"
     )
-    fill_colour: Colour = Field(None, description="Background colour in RGB")
+    fill_colour: Optional[Colour] = Field(None, description="Background colour in RGB")
 
     def build(self, doc: Document, style_registry: StyleRegistry):
         """
