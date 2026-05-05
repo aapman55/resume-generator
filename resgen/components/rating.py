@@ -7,7 +7,7 @@ import math
 from typing import List
 
 from fpdf import YPos, XPos
-from pydantic import Field, BaseModel, root_validator
+from pydantic import Field, BaseModel, model_validator
 
 from resgen.core.colours import Colour
 from resgen.core.component import Component
@@ -67,7 +67,7 @@ class TitledCircleRatingList(Component):
             new_x=XPos.LMARGIN,
         )
 
-        common_config = copy.deepcopy(self.dict())
+        common_config = copy.deepcopy(self.model_dump())
         #  Remove the ratings
         common_config.pop("ratings")
 
@@ -110,22 +110,21 @@ class CircleRating(Component):
         2, description="Line width. X times the default width of 0.2 mm"
     )
 
-    @root_validator
-    def validate_rating_not_larger_than_total(cls, values):
+    @model_validator(mode="after")
+    def validate_rating_not_larger_than_total(self):
         """
         This validator makes sure that the total ratings is a higher number
         than the rating.
         :param values:
         :return:
         """
-        rating = values.get("rating")
-        rating_total = values.get("rating_total")
-        if rating > rating_total:
+
+        if self.rating > self.rating_total:
             raise ValueError(
-                f"The value of the rating is larger than the total. ('{rating}' > '{rating_total}')"
+                f"The value of the rating is larger than the total. ('{self.rating}' > '{self.rating_total}')"
             )
 
-        return values
+        return self
 
     def add_pdf_content(self, doc: Document, style_registry: StyleRegistry) -> None:
         """

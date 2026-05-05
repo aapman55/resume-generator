@@ -153,12 +153,12 @@ components:
   experience_timespan_width: 35
   experiences:
     - title: Pig
-      experience_start: 2010
-      experience_end: 2015
+      experience_start: "2010"
+      experience_end: "2015"
       description: Farmhouse
     - title: Piglet
-      experience_start: 2010
-      experience_end: 2010
+      experience_start: "2010"
+      experience_end: "2010"
       description: Pigging around, doing pig stuff
 
 sidebar_components:
