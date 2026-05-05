@@ -49,7 +49,7 @@ class PageSettings(BaseModel):
     orientation: Orientation = Field(default=Orientation.PORTRAIT)
     sidebar: Optional[SideBar] = Field(default=None, description="Define sidebar")
 
-    class Config:
+    class ConfigDict:
         """
         Needed to supress warning
         """
